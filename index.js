@@ -2,8 +2,6 @@
 
 const path = require('path');
 const electron = require('electron');
-const jsonfile = require('jsonfile');
-const mkdirp = require('mkdirp');
 
 module.exports = function (options) {
   const app = electron.app || electron.remote.app;
@@ -106,8 +104,8 @@ module.exports = function (options) {
 
     // Save state
     try {
-      mkdirp.sync(path.dirname(fullStoreFileName));
-      jsonfile.writeFileSync(fullStoreFileName, state);
+      if ( ! fs.existsSync(config.path) ) fs.mkdirSync(config.path);
+      fs.writeFileSync(fullStoreFileName, JSON.stringify(state));
     } catch (err) {
       // Don't care
     }
@@ -156,7 +154,7 @@ module.exports = function (options) {
 
   // Load previous state
   try {
-    state = jsonfile.readFileSync(fullStoreFileName);
+    state = JSON.parse(jsonfile.readFileSync(fullStoreFileName));
   } catch (err) {
     // Don't care
   }
