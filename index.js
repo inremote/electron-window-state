@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require(fs);
+const fs = require('fs');
 const path = require('path');
 const electron = require('electron');
 
@@ -155,7 +155,7 @@ module.exports = function (options) {
 
   // Load previous state
   try {
-    state = JSON.parse(jsonfile.readFileSync(fullStoreFileName));
+    state = JSON.parse(fs.readFileSync(fullStoreFileName));
   } catch (err) {
     // Don't care
   }
